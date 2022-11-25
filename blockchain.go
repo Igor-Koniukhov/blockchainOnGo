@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -38,6 +39,13 @@ func NewBlockchain() *Blockchain {
 	bc.CreateBlock(0, "Init hash")
 	return bc
 }
+func (bc *Blockchain) Print() {
+	for i, block := range bc.chain {
+		fmt.Printf("%s Chain %d %s \n", strings.Repeat("==", 25), i, strings.Repeat("=", 25))
+		block.Print()
+	}
+
+}
 
 func (bc *Blockchain) CreateBlock(nonce int, previousHash string) *Block {
 	b := NewBlock(nonce, previousHash)
@@ -46,8 +54,10 @@ func (bc *Blockchain) CreateBlock(nonce int, previousHash string) *Block {
 }
 
 func main() {
-	b := NewBlock(0, "init hash")
-	fmt.Println(b)
-	b.Print()
-
+	blockChain := NewBlockchain()
+	blockChain.Print()
+	blockChain.CreateBlock(3, "hash1")
+	blockChain.Print()
+	blockChain.CreateBlock(4, "hash2")
+	blockChain.Print()
 }
